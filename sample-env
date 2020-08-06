@@ -1,0 +1,10 @@
+PORT=
+
+# MySQL
+DB_HOST=string
+DB_USER=string
+DB_PASSWORD=string
+DB_DATABASE=string
+
+# Mutler
+PICS_UPLOADS_PATH=

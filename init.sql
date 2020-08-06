@@ -21,14 +21,16 @@ CREATE TABLE IF NOT EXISTS `checkpoint4_portfolio`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `short_description` VARCHAR(255) NOT NULL,
-  `long_description` VARCHAR(512) NULL,
-  `url_github_front` VARCHAR(45) NULL,
-  `url_github_back` VARCHAR(45) NULL,
-  `url_deployed` VARCHAR(45) NULL,
-  `screenshot` VARCHAR(45) NOT NULL,
+  `long_description` VARCHAR(512) NULL DEFAULT NULL,
+  `url_github_front` VARCHAR(45) NULL DEFAULT NULL,
+  `url_github_back` VARCHAR(45) NULL DEFAULT NULL,
+  `url_deployed` VARCHAR(45) NULL DEFAULT NULL,
+  `thumbnail` VARCHAR(45) NOT NULL,
   `techno` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
