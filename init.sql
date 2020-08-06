@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `checkpoint4_portfolio`.`project` (
   `techno` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 
