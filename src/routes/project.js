@@ -38,8 +38,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', upload.single('thumbnail'), (req, res) => {
-  const sqlInsertProject =
-    `INSERT INTO project 
+  const sqlInsertProject = `INSERT INTO project
       (name, short_description, long_description, url_github_front, url_github_back, url_deployed, thumbnail, techno)
     VALUES
       (?,?,?,?,?,?,?,?)`

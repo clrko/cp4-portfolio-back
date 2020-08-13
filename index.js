@@ -9,9 +9,11 @@ const routes = require('./src/routes/index')
 const app = express()
 
 app.use(morgan('dev'))
-app.use(cors({
-  origin: appBaseUrl || 'http://localhost:3000'
-}))
+app.use(
+  cors({
+    origin: appBaseUrl || 'http://localhost:3000'
+  })
+)
 app.use(express.json())
 app.use('/uploads', express.static(/* picsUploadsPath || */ 'uploads'))
 app.use(express.static(path.join(__dirname, 'public')))
