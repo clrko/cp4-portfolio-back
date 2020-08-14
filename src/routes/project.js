@@ -42,6 +42,7 @@ router.post('/', upload.single('thumbnail'), (req, res) => {
       (name, short_description, long_description, url_github_front, url_github_back, url_deployed, thumbnail, techno)
     VALUES
       (?,?,?,?,?,?,?,?)`
+  const thumbnail = req.file ? req.file.path : 'placeholder.png'
   const projectData = [
     req.body.name,
     req.body.short_description,
@@ -49,7 +50,7 @@ router.post('/', upload.single('thumbnail'), (req, res) => {
     req.body.url_github_front,
     req.body.url_github_back,
     req.body.url_deployed,
-    req.file.path,
+    thumbnail,
     req.body.techno
   ]
   connection.query(sqlInsertProject, projectData, (err, stats) => {
