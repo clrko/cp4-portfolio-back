@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint --fix *.js src/",
+    "lint": "eslint --fix src/",
     "start": "nodemon -w src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
