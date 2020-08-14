@@ -1,39 +1,46 @@
 const express = require('express')
-const multer = require('multer')
 const connection = require('../helper/db')
-const { picsUploadsPath } = require('../config')
+const upload = require('../middlewares/upload')
 
 const router = express.Router()
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadsPath = picsUploadsPath || 'uploads'
-    cb(null, uploadsPath)
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-
-const fileFilter = (req, file, cb) => {
-  // reject a file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true)
-  } else {
-    cb(new Error('This type of file is not supported'), null, false)
-  }
-}
-
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter
-})
 
 router.get('/', (req, res) => {
   const sqlGetProjects = 'SELECT * FROM project'
   connection.query(sqlGetProjects, (err, projects) => {
     if (err) throw err
-    res.status(200).send(projects)
+    res.send(projects)
+  })
+})
+
+router.get('/:id', (req, res) => {
+  const sqlGetProject = 'SELECT * FROM project WHERE id = ?'
+  connection.query(sqlGetProject, [req.params.id], (err, projects) => {
+    if (err) throw err
+    if (projects.length === 0) {
+      return res.status(404).send('Project not found')
+    }
+    return res.send(projects[0])
+  })
+})
+
+router.put('/:projectId', upload.single('thumbnail'), (req, res) => {
+  const sqlUpdateProject = `UPDATE project SET ? WHERE id = ?`
+  const { projectId } = req.params
+  const projectData = {
+    name: req.body.name,
+    short_description: req.body.short_description,
+    long_description: req.body.long_description,
+    url_github_front: req.body.url_github_front,
+    url_github_back: req.body.url_deployed,
+    url_deployed: req.body.url_deployed,
+    techno: req.body.techno
+  }
+  if (req.file) {
+    projectData.thumbnail = req.file.filename
+  }
+  connection.query(sqlUpdateProject, [projectData, projectId], (err, stats) => {
+    if (err) throw err
+    return res.sendStatus(200)
   })
 })
 
@@ -55,7 +62,7 @@ router.post('/', upload.single('thumbnail'), (req, res) => {
   ]
   connection.query(sqlInsertProject, projectData, (err, stats) => {
     if (err) throw err
-    return res.sendStatus(200)
+    return res.sendStatus(201)
   })
 })
 
