@@ -1,7 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const connection = require('../helper/db')
-const { picsUploadsPath } = require('../../config')
+const { picsUploadsPath } = require('../config')
 
 const router = express.Router()
 
@@ -42,7 +42,7 @@ router.post('/', upload.single('thumbnail'), (req, res) => {
       (name, short_description, long_description, url_github_front, url_github_back, url_deployed, thumbnail, techno)
     VALUES
       (?,?,?,?,?,?,?,?)`
-  const thumbnail = req.file ? req.file.path : 'placeholder.png'
+  const thumbnail = req.file ? req.file.filename : 'placeholder.png'
   const projectData = [
     req.body.name,
     req.body.short_description,
